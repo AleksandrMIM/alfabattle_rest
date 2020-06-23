@@ -1,14 +1,20 @@
 plugins {
     id 'org.springframework.boot' version '2.3.1.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id 'java'
+    id "java"
+    id "idea"
 }
 
 group = 'com.alfabattle'
-version = '1.0-SNAPSHOT'
-sourceCompatibility = '11'
+
+apply from: rootProject.file('versions.gradle')
 
 configurations {
+    all {
+        resolutionStrategy {
+            cacheChangingModulesFor 5, 'minutes'
+        }
+    }
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -21,18 +27,34 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${versions['spring-cloud']}"
 
     compileOnly 'org.projectlombok:lombok'
+    compileOnly "org.jetbrains:annotations:${versions['annotations']}"
+    compileOnly "org.mapstruct:mapstruct-processor:${versions['mapstruct']}"
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    annotationProcessor "org.mapstruct:mapstruct-processor:${versions['mapstruct']}"
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+
+    runtime "org.springframework.cloud:spring-cloud-dependencies:${versions['spring-cloud-runtime']}"
+}
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = 11
+    targetCompatibility = 11
+    options.encoding = 'UTF-8'
 }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+        excludeTags 'Integration'
+    }
 }

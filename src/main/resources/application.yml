@@ -1,0 +1,6 @@
+server:
+  port: 9090
+
+weather:
+  api:
+    url: https://api.exchangeratesapi.io
