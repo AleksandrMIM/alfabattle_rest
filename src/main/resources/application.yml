@@ -3,6 +3,14 @@ server:
   servlet:
     encoding:
       charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write_dates_as_timestamps: false
 
 weather:
   api:

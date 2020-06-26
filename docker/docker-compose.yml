@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  alfabattle-rest:
+    container_name: alfabattle-rest
+    image: aminetor/alfabattle_rest:1.0-SNAPSHOT
+    ports:
+      - 9090:9090

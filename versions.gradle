@@ -3,6 +3,9 @@ ext.versions = [
          * Сторонние библиотеки
          */
         'spring-cloud'        : '2.2.3.RELEASE',
+        'jackson'             : '2.11.0',
+        'disruptor'           : '3.4.2',
+        'apache-http-core'    : '4.4.13',
         /**
          * Runtime library
          */
